@@ -63,12 +63,6 @@
             max-width: 90%;
             width: 380px;
             z-index: 10;
-            animation: fadeIn 1.2s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .icon-heart {
@@ -100,14 +94,15 @@
             line-height: 1.5;
         }
 
-        /* Container Tombol Flexbox */
+        /* Container Tombol */
         .buttons-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
             width: 100%;
-            min-height: 50px;
+            min-height: 60px;
+            position: relative;
         }
 
         .btn {
@@ -117,7 +112,6 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             user-select: none;
             -webkit-tap-highlight-color: transparent;
@@ -126,6 +120,7 @@
         .btn-yes {
             background: linear-gradient(45deg, #ff416c, #ff4b2b);
             color: white;
+            position: relative;
             z-index: 2;
         }
 
@@ -133,7 +128,9 @@
             background: rgba(255, 255, 255, 0.25);
             color: #fff;
             border: 1px solid rgba(255, 255, 255, 0.4);
+            position: relative;
             z-index: 5;
+            transition: top 0.2s ease, left 0.2s ease;
         }
 
         /* Modal Popup */
@@ -160,12 +157,6 @@
             width: 350px;
             text-align: center;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes popUp {
-            from { transform: scale(0.6); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
         }
 
         .modal-content h2 {
@@ -195,7 +186,7 @@
         
         <div class="buttons-wrapper">
             <button class="btn btn-yes" onclick="acceptProposal()">Yes! 💖</button>
-            <button class="btn btn-no" id="noBtn" onmouseover="moveButton()" onclick="moveButton()" ontouchstart="moveButton()">No 😜</button>
+            <button class="btn btn-no" id="noBtn" onmouseover="moveButton()" onclick="moveButton()" ontouchstart="moveButton(event)">No 😜</button>
         </div>
     </div>
 
@@ -210,7 +201,7 @@
     </div>
 
     <script>
-        // Efek Kelopak Bunga Berjatuhan
+        // Efek Kelopak Bunga
         function createPetal() {
             const petal = document.createElement('div');
             petal.classList.add('petal');
@@ -233,8 +224,10 @@
         // Fungsi Tombol No Kabur
         const noBtn = document.getElementById('noBtn');
 
-        function moveButton() {
-            const padding = 20;
+        function moveButton(e) {
+            if (e) e.preventDefault();
+            
+            const padding = 30;
             const maxX = window.innerWidth - noBtn.offsetWidth - padding;
             const maxY = window.innerHeight - noBtn.offsetHeight - padding;
 
@@ -246,7 +239,7 @@
             noBtn.style.top = `${randomY}px`;
         }
 
-        // Jalankan saat diklik Yes
+        // Jawaban Yes
         function acceptProposal() {
             document.getElementById('loveModal').style.display = 'flex';
         }
